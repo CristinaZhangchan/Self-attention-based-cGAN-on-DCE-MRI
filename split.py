@@ -30,7 +30,7 @@ def save_split_phases(image_numpy, file_id, base_dir, type_name):
         single_channel = image_numpy[:, :, channel_idx].astype(np.uint8)
         
         # 构建文件名: patientid_slice_001_real_phase1.png
-        filename = f"{file_id}_{type_name}_{phase_name}.jpg"
+        filename = f"{file_id}_{type_name}_{phase_name}.png"
         filepath = os.path.join(save_dir, filename)
         
         # 保存
@@ -49,12 +49,12 @@ if __name__ == '__main__':
     visualizer = Visualizer(opt)
     
     # 创建结果目录
-    # web_dir = results/experiment_name/test_latest/
+    web_dir = '/home/maia-user/cris/AAD-DCE/results/breast_cancer_dce_v1/test_latest/images'
     web_dir = os.path.join(opt.results_dir, opt.name, '%s_%s' % (opt.phase, opt.which_epoch))
     webpage = html.HTML(web_dir, 'Experiment = %s, Phase = %s, Epoch = %s' % (opt.name, opt.phase, opt.which_epoch))
     
     # 定义拆分图片的保存根目录
-    # split_dir = results/experiment_name/test_latest/split_output/
+    split_dir = '/home/maia-user/cris/AAD-DCE/split_output/'
     split_dir = os.path.join(web_dir, 'split_output')
     
     print(f"Starting testing. Split images will be saved to: {split_dir}")
@@ -75,8 +75,7 @@ if __name__ == '__main__':
         
         # 解析 ID: 移除后缀 (_TIRM.png)
         # 结果: 19042580_slice_001
-        file_id = basename.replace('_b1000.png', '').replace('_b1000.png', '') 
-        #file_id = basename.replace('_b800.png', '').replace('_b800.png', '')
+        file_id = basename.replace('_TIRM.png', '').replace('_TIRM.jpg', '')
         
         # 3. 获取图像数据 (numpy array, 0-255, HxWx3)
         # visuals 包含 'real_A', 'fake_B', 'real_B'
